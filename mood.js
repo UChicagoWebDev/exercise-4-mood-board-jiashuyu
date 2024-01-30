@@ -1,7 +1,7 @@
 const bing_api_endpoint = "https://api.bing.microsoft.com/v7.0/images/search";
 const bing_api_key = BING_API_KEY
 
-function runSearch(query = "") {
+function runSearch() {
 
   // TODO: Clear the results pane before you run a new search
   document.getElementById('resultsImageContainer').innerHTML = '';
@@ -10,10 +10,7 @@ function runSearch(query = "") {
 
   // TODO: Build your query by combining the bing_api_endpoint and a query attribute
   //  named 'q' that takes the value from the search bar input field.
-  if (query === "") {
-    query = document.querySelector('.search input').value;
-  }
-
+  const query = document.querySelector('.search input').value;
   const url = `${bing_api_endpoint}?q=${encodeURIComponent(query)}`;
 
   let request = new XMLHttpRequest();
@@ -54,7 +51,10 @@ function runSearch(query = "") {
       relatedSearches.forEach(search => {
         const li = document.createElement('li');
         li.textContent = search.displayText;
-        li.addEventListener('click', () => runSearch(search.displayText));
+        li.addEventListener('click', () => {
+          document.querySelector(".search input").value = li.textContent;
+          runSearch();
+        });
         suggestionsContainer.appendChild(li);
       });
     }
