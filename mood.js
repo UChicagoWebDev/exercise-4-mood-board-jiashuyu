@@ -38,7 +38,12 @@ function runSearch() {
     images.forEach(image => {
       const imgElement = document.createElement('img');
       imgElement.src = image.contentUrl;
-      imgElement.addEventListener('click', () => addImageToMoodBoard(image.contentUrl));
+      imgElement.addEventListener('click', () => {
+        const board = document.getElementById('board');
+        const imgElement = document.createElement('img');
+        imgElement.src = image.contentUrl;
+        board.appendChild(imgElement);
+      });
       resultsContainer.appendChild(imgElement);
     });
 
@@ -72,13 +77,6 @@ function runSearch() {
   return false;  // Keep this; it keeps the browser from sending the event
                   // further up the DOM chain. Here, we don't want to trigger
                   // the default form submission behavior.
-}
-
-function addImageToMoodBoard(imageUrl) {
-  const board = document.getElementById('board');
-  const imgElement = document.createElement('img');
-  imgElement.src = imageUrl;
-  board.appendChild(imgElement);
 }
 
 function openResultsPane() {
